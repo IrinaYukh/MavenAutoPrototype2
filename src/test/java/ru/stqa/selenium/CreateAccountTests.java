@@ -1,10 +1,13 @@
-package ru.stqa.selenium.pages;
+package ru.stqa.selenium;
 
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import ru.stqa.selenium.TestBase;
+import ru.stqa.selenium.pages.AuthEventsPageHelper;
+import ru.stqa.selenium.pages.CreateAccountPageHelper;
+import ru.stqa.selenium.pages.HomePageHelper;
+import ru.stqa.selenium.pages.RegistrationFormHelper;
 
 public class CreateAccountTests extends TestBase
 {
@@ -44,16 +47,18 @@ public class CreateAccountTests extends TestBase
         Assert.assertTrue(createAccountPage.isHeaderCorrect("Registration"));
         Assert.assertTrue(authEventsPage.isDisplayedIconMenu());
 
-        registForm.enterFirstName("Darya")
-                .enterLastName("Dom")
-                .enterPhone("052-000-0000")
-                .selectConfession("Religious")
+        registForm.selectGender("Female")
                 .selectMaritalStatus("Married")
+                .enterFirstName("Darya")
+                .enterLastName("Dom")
+                .enterPhone("+972 52 0000000")
+                .selectConfession("Religious")
                 .selectFood("Any")
-                .selectGender("Female")
                 .enterInfo("Hello!");
-  //              .selectLanguage("Russian");
+
+  //            .selectLanguage("Russian")
   //              .enterBirthday("10","JAN","2000");
+
 
     }
 
