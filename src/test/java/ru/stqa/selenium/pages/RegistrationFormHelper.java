@@ -1,6 +1,7 @@
 package ru.stqa.selenium.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -35,6 +36,9 @@ public class RegistrationFormHelper extends PageBase
 
     @FindBy(xpath = "//mat-select[@aria-label='Food Preferences']/div")
     WebElement food;
+
+    @FindBy(xpath = "//mat-toolbar-row[@class='mat-toolbar-row']")
+    WebElement emptyClick;
 
     @FindBy(xpath = "//mat-select[@aria-label='Gender']/div")
     WebElement gender;
@@ -83,6 +87,7 @@ public class RegistrationFormHelper extends PageBase
 
     public RegistrationFormHelper selectMaritalStatus(String value)
     {
+        waitUntilElementIsClickable(driver,maritalStatus,100);
         Actions action = new Actions(driver);
         action.moveToElement(maritalStatus).build().perform();
         maritalStatus.click();
@@ -90,12 +95,16 @@ public class RegistrationFormHelper extends PageBase
         return this;
     }
 
-    public RegistrationFormHelper selectFood(String value)
-    {
+    public RegistrationFormHelper selectFood(String value) {
+        waitUntilElementIsloaded(driver,food,500);
         Actions action = new Actions(driver);
         action.moveToElement(food).build().perform();
+        waitUntilElementIsloaded(driver,food,500);
         food.click();
         driver.findElement(By.xpath("//span[contains(text(),'" + value + "')]")).click();
+
+        Actions emptyPush = new Actions(driver);
+        emptyPush.moveToElement(emptyClick).click().build().perform();
         return this;
     }
 
@@ -104,7 +113,8 @@ public class RegistrationFormHelper extends PageBase
         Actions action = new Actions(driver);
         action.moveToElement(gender).build().perform();
         gender.click();
-     //   new Select(driver.findElement(By.xpath("//span[@class='mat-option-text']"))).selectByVisibleText(value);
+        WebElement list = driver.findElement(By.xpath("//span[contains(text(),'Female')]"));
+        waitUntilElementIsloaded(driver,list,50);
         driver.findElement(By.xpath("//span[contains(text(),'" + value + "')]")).click();
         return this;
     }
@@ -118,12 +128,14 @@ public class RegistrationFormHelper extends PageBase
 
     public RegistrationFormHelper selectLanguage(String value)
     {
+        waitUntilElementIsClickable(driver,languages,100);
         Actions action = new Actions(driver);
         action.moveToElement(languages).build().perform();
         languages.click();
         driver.findElement(By.xpath("//span[@class='mat-option-text'][contains(text(),'" + value + "')]")).click();
         return this;
     }
+
 
     public RegistrationFormHelper enterBirthday(String day, String month, String year) throws InterruptedException {
         Actions action = new Actions(driver);
@@ -135,23 +147,32 @@ public class RegistrationFormHelper extends PageBase
         arrow.click();
         WebElement yearSign = driver.findElement(By.xpath("//button[@class='mat-calendar-period-button mat-button']//span[@class='mat-button-wrapper']"));
         waitUntilElementIsloaded(driver, yearSign,200);
-        Thread.sleep(2000);
 
+//        driver.findElement(By.xpath("//span[@class='mat-calendar-body-cell-content'][contains(text(),'" + year + "')]")).click();
         new Select(driver.findElement(By.xpath("//div[@class='mat-calendar-body-cell-content']")))
                 .selectByVisibleText(year);
 
         // select the month of the User's Birthday
-        Thread.sleep(2000);
 
+//        driver.findElement(By.xpath("//span[@class='mat-calendar-body-cell-content'][contains(text(),'" + month + "')]")).click();
         new Select(driver.findElement(By.xpath("//div[@class='mat-calendar-body-cell-content']")))
                 .selectByVisibleText(month);
 
         // select the day of the User's Birthday
-        Thread.sleep(2000);
+
+//        driver.findElement(By.xpath("//span[@class='mat-calendar-body-cell-content'][contains(text(),'" + day + "')]")).click();
         new Select(driver.findElement(By.xpath("//div[@class='mat-calendar-body-cell-content']")))
                 .selectByVisibleText(day);
         return this;
     }
 
 
+    public RegistrationFormHelper emptyClick()
+    {
+//        System.out.println(emptyClick.isSelected());
+//        emptyClick.click();
+        Actions action = new Actions(driver);
+        action.sendKeys(Keys.TAB);
+        return this;
+    }
 }
