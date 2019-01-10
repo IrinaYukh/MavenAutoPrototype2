@@ -1,12 +1,10 @@
 package ru.stqa.selenium.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.Select;
 
 public class RegistrationFormHelper extends PageBase
 {
@@ -99,7 +97,6 @@ public class RegistrationFormHelper extends PageBase
         waitUntilElementIsloaded(driver,food,500);
         Actions action = new Actions(driver);
         action.moveToElement(food).build().perform();
-        waitUntilElementIsloaded(driver,food,500);
         food.click();
         driver.findElement(By.xpath("//span[contains(text(),'" + value + "')]")).click();
 
@@ -137,42 +134,27 @@ public class RegistrationFormHelper extends PageBase
     }
 
 
-    public RegistrationFormHelper enterBirthday(String day, String month, String year) throws InterruptedException {
+    public RegistrationFormHelper enterBirthday(String day, String month, String year)
+    {
         Actions action = new Actions(driver);
-        action.moveToElement(birthday).build().perform();
+        action.moveToElement(birthday).click().build().perform();
         birthday.click();
 
         // select the year of the User's Birthday
         selectYear.click();
         arrow.click();
-        WebElement yearSign = driver.findElement(By.xpath("//button[@class='mat-calendar-period-button mat-button']//span[@class='mat-button-wrapper']"));
+        WebElement yearSign = driver.findElement(By.xpath("//div[contains(text(),'1992')]"));
         waitUntilElementIsloaded(driver, yearSign,200);
+        System.out.println(yearSign.getText());
 
-//        driver.findElement(By.xpath("//span[@class='mat-calendar-body-cell-content'][contains(text(),'" + year + "')]")).click();
-        new Select(driver.findElement(By.xpath("//div[@class='mat-calendar-body-cell-content']")))
-                .selectByVisibleText(year);
+        driver.findElement(By.xpath("//div[contains(text(),'"+year+"')]")).click();
 
         // select the month of the User's Birthday
-
-//        driver.findElement(By.xpath("//span[@class='mat-calendar-body-cell-content'][contains(text(),'" + month + "')]")).click();
-        new Select(driver.findElement(By.xpath("//div[@class='mat-calendar-body-cell-content']")))
-                .selectByVisibleText(month);
+        driver.findElement(By.xpath("//div[contains(text(),'" + month + "')]")).click();
 
         // select the day of the User's Birthday
-
-//        driver.findElement(By.xpath("//span[@class='mat-calendar-body-cell-content'][contains(text(),'" + day + "')]")).click();
-        new Select(driver.findElement(By.xpath("//div[@class='mat-calendar-body-cell-content']")))
-                .selectByVisibleText(day);
+        driver.findElement(By.xpath("//div[contains(text(),'" + day + "')]")).click();
         return this;
     }
 
-
-    public RegistrationFormHelper emptyClick()
-    {
-//        System.out.println(emptyClick.isSelected());
-//        emptyClick.click();
-        Actions action = new Actions(driver);
-        action.sendKeys(Keys.TAB);
-        return this;
-    }
 }

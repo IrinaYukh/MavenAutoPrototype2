@@ -42,6 +42,14 @@ public abstract class PageBase {
     }
   }
 
+  public static void waitUntilElementIsClickable(WebDriver driver, WebElement element, int time) {
+    try {
+      new WebDriverWait(driver, time).until(ExpectedConditions.elementToBeClickable(element));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
   public void enterValueToField(WebElement element,String value)
   {
     element.click();

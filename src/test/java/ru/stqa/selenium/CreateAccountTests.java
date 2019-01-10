@@ -1,5 +1,7 @@
 package ru.stqa.selenium;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -20,6 +22,7 @@ public class CreateAccountTests extends TestBase
     private int b = 1000;
     private int count = a + (int)(Math.random()*b);
 
+
     @BeforeMethod
     public void initPageObject()
     {
@@ -35,7 +38,8 @@ public class CreateAccountTests extends TestBase
 
     }
     @Test
-    public void createAccountPositiveTest() throws InterruptedException {
+    public void createAccountPositiveTest()
+    {
         String email = "darya"+count+"@gmail.com";
 
         createAccountPage.enterEmail(email)
@@ -54,10 +58,9 @@ public class CreateAccountTests extends TestBase
                 .enterPhone("+972 52 0000000")
                 .selectConfession("Religious")
                 .selectFood("Any")
-                .enterInfo("Hello!");
-
-  //            .selectLanguage("Russian")
-  //              .enterBirthday("10","JAN","2000");
+                .enterInfo("Hello!")
+                .selectLanguage("Russian")
+                .enterBirthday("10","JAN","2000");
 
 
     }
