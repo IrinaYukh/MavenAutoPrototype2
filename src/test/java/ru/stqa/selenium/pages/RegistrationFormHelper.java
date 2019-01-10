@@ -48,6 +48,11 @@ public class RegistrationFormHelper extends PageBase
     @FindBy(xpath = "//textarea[@id='description']")
     WebElement infoField;
 
+    @FindBy(xpath = "//button[@type='submit']")
+    WebElement saveButton;
+
+    @FindBy(xpath = "//div[@class='col-12']/h1[@class='gorisontal-center']")
+    WebElement eventsPage;
 
     public RegistrationFormHelper(WebDriver driver)
     {
@@ -156,5 +161,13 @@ public class RegistrationFormHelper extends PageBase
         driver.findElement(By.xpath("//div[contains(text(),'" + day + "')]")).click();
         return this;
     }
+
+    public void clickSaveButton()
+    {
+        Actions action = new Actions(driver);
+        action.moveToElement(saveButton).click().build().perform();
+        waitUntilElementIsloaded(driver,eventsPage,500);
+    }
+
 
 }

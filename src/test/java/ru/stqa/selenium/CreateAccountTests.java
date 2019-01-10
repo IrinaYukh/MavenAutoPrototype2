@@ -62,6 +62,13 @@ public class CreateAccountTests extends TestBase
                 .selectLanguage("Russian")
                 .enterBirthday("10","JAN","2000");
 
+        registForm.clickSaveButton();
+
+
+        Assert.assertTrue(authEventsPage.isDisplayedIconMenu());
+        Assert.assertTrue(authEventsPage
+                .isElementPresent(By.xpath("//button[@class='mat-fab mat-warn']//span[@class='mat-button-wrapper']")));
+        Assert.assertTrue(authEventsPage.isDisplayedAddEventIcon());
 
     }
 

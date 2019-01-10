@@ -1,5 +1,7 @@
 package ru.stqa.selenium.pages;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,6 +10,9 @@ public class AuthEventsPageHelper extends PageBase
 {
     @FindBy(xpath = "//mat-icon[@class='but mat-icon material-icons']")
     WebElement iconMenu;
+
+    @FindBy(xpath = "//div[@class='right-down']")
+    WebElement addEventIcon;
 
     @FindBy(xpath = "//span[contains(text(),'Filters')]")
     WebElement filterButton;
@@ -37,4 +42,19 @@ public class AuthEventsPageHelper extends PageBase
     {
         return iconMenu.getAttribute("mattooltip").equals("Menu");
     }
+
+    public boolean isDisplayedAddEventIcon()
+    {
+        return addEventIcon.getAttribute("mattooltip").equals("Add new Event");
+    }
+
+    public boolean isElementPresent(By locator) {
+        try {
+            driver.findElement(locator);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
 }
