@@ -1,6 +1,7 @@
 package ru.stqa.selenium;
 
 import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.selenium.pages.*;
@@ -41,7 +42,7 @@ public class UserProfileTests extends TestBase
     }
 
     @Test
-    public void changeUserAvatarPicture()
+    public void w_changeUserAvatarPicture()
     {
         File photo = new File("C:\\Users\\MichaelY\\Documents\\GitHub\\MavenAutoPrototype2\\src\\test\\resources\\images.png");
 
@@ -58,16 +59,36 @@ public class UserProfileTests extends TestBase
     }
 
     @Test
-    public void changeUserProfileData() {
+    public void change_FoodValue_UserProfile()
+    {
         authEventsPage.pressHamburgerMenu();
         hamburgerMenu.waitUntilPageIsLoaded();
         hamburgerMenu.clickProfileButton();
-        createAccountPage.waitUntilRegistrationFormIsloaded();
-        userProfile.initProfileChanges();
-        userProfile.changeFoodValue("Any");
-
-        userProfile.saveChanges();
-
+        userProfile.wait_ProfilePage_Loaded()
+                .initProfileChanges()
+                .changeFoodValue("Kosher")
+                .saveChanges();
     }
 
+    @Test
+    public void change_LanguageValue_UserProfile()
+    {
+        authEventsPage.pressHamburgerMenu();
+        hamburgerMenu.waitUntilPageIsLoaded();
+        hamburgerMenu.clickProfileButton();
+        userProfile.wait_ProfilePage_Loaded()
+                .initProfileChanges()
+                .changeLanguageValue("Russian")
+                .saveChanges();
+    }
+
+    @AfterMethod
+    public void LogOut()
+    {
+        authEventsPage.pressHamburgerMenu();
+        hamburgerMenu.waitUntilPageIsLoaded()
+                .clickLogoutButton();
+        homepage.waitUntilPageIsLoaded()
+                .isLoginButtonPresent();
+    }
 }
