@@ -40,14 +40,31 @@ public class AuthEventsPageTests extends TestBase
                     .selectHoliday("Sukkot")
  //                   .enterAddress("Avenida Rivadavia 1235, Buenos Aires, Argentina")
                     .enterAddress("Hertzel Street, Rehovot, Israel")
-                    .selectEventDataFrom_CurrentMonth("25","26")
-                    .setTime("10:00","12:50")
+ //                   .selectEventDataFrom_CurrentMonth("25","26")
+//                    .setTime("10:00","12:50")
+                    .setAutoDate()
+                    .setAutoTime()
                     .selectConfession("Religious")
                     .selectKitchen("Kosher")
                     .enterInfoAboutEvent("This will be the great party!!!")
                     .saveNewEventButton();
 
+    }
 
+    @Test
+    public void newEvent_AutoDataGeneration_PositiveTest() {
+        authEventsPage.clickAddEventButton()
+                .waitUntilEventFormIsLoaded()
+                .enterTitle("Hey!")
+                .selectHoliday("Sukkot")
+                .enterAddress("Hertzel Street, Rehovot, Israel")
+                .setAutoDate()
+                .setAutoTime()
+                .selectConfession("Religious")
+                .selectKitchen("Any")
+                .enterInfoAboutEvent("This will be the great party!!!")
+                .saveNewEventButton();
 
     }
+
 }
