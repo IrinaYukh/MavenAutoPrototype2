@@ -33,10 +33,20 @@ public class AuthEventsPageTests extends TestBase
     }
 
     @Test
-    public void newEventCreationPositiveTest()
-    {
+    public void newEventCreationPositiveTest() {
         authEventsPage.clickAddEventButton()
-                    .waitUntilEventFormIsLoaded();
+                    .waitUntilEventFormIsLoaded()
+                    .enterTitle("Welcome")
+                    .selectHoliday("Sukkot")
+ //                   .enterAddress("Avenida Rivadavia 1235, Buenos Aires, Argentina")
+                    .enterAddress("RFK Stadium Parking Lot 8, Independence Avenue Southeast, Washington, DC, USA")
+                    .selectEventDataFrom_CurrentMonth("25","26")
+                    .setTime("10:00","12:50")
+                    .selectConfession("Religious")
+                    .selectKitchen("Kosher")
+                    .enterInfoAboutEvent("This will be the great party!!!")
+                    .saveNewEventButton();
+
 
 
     }
