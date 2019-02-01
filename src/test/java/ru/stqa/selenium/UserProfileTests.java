@@ -55,7 +55,6 @@ public class UserProfileTests extends TestBase
                 .setAvatar(photo)
                 .waitUntilAvatarElementIsLoaded()
                 .saveChanges();
-
     }
 
     @Test

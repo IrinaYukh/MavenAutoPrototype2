@@ -1,5 +1,6 @@
 package ru.stqa.selenium;
 
+import com.aventstack.extentreports.Status;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -29,37 +30,48 @@ public class AuthEventsPageTests extends TestBase
                 .pressSubmitButton();
         authEventsPage.waitUntilPageIsLoaded();
 
-
     }
 
     @Test
-    public void newEventCreationPositiveTest() {
+    public void newEventCreationPositiveTest() throws InterruptedException
+    {
+        logger = extent.createTest("newEventCreationPositiveTest()");
+        logger.log(Status.INFO, "Creating new Event using Add New Event Form");
         authEventsPage.clickAddEventButton()
                     .waitUntilEventFormIsLoaded()
-                    .enterTitle("Welcome")
-                    .selectHoliday("Sukkot")
-                    .enterAddress("Hertzel Street, Rehovot, Israel")
-                    .setAutoDate()
-                    .setAutoTime()
+                    .enterTitle("Let's do the party")
+                    .selectHoliday("Purim")
+                    .enterAddress("Mirke 25, Vrhnika, Slovenia")
+                    .selectEventDataFrom_CurrentMonth("25","26")
+                    .setHoursFor_fromTime("12")
+                    .setMinutesFor_fromTime("52")
+                    .setEventToTime("1352")
                     .selectConfession("Religious")
                     .selectKitchen("Kosher")
                     .enterInfoAboutEvent("This will be the great party!!!")
+                    .waitUntilSaveButtonIsVisible()
                     .saveNewEventButton();
+        logger.log(Status.PASS, "The Event was created successfully!");
     }
 
     @Test
-    public void newEvent_AutoDataGeneration_PositiveTest() {
+    public void newEvent_AutoDataGeneration_PositiveTest()
+    {
+        logger = extent.createTest("newEvent_AutoDataGeneration_PositiveTest()");
+        logger.log(Status.INFO, "Creating new Event using Add New Event Form with AutoData generator");
         authEventsPage.clickAddEventButton()
                 .waitUntilEventFormIsLoaded()
                 .enterTitle("Hey!")
                 .selectHoliday("Sukkot")
-                .enterAddress("Avenida Rivadavia 1235, Buenos Aires, Argentina")
+                .enterAddress("Avenida Rivadavia 1235 Buenos Aires, Argentina")
                 .setAutoDate()
                 .setAutoTime()
                 .selectConfession("Religious")
                 .selectKitchen("Any")
                 .enterInfoAboutEvent("This will be the great party!!!")
+                .waitUntilSaveButtonIsVisible()
                 .saveNewEventButton();
+        logger.log(Status.PASS, "The Event was created successfully!");
     }
 
 }

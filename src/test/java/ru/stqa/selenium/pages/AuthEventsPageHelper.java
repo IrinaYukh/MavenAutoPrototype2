@@ -10,8 +10,6 @@ import org.openqa.selenium.support.FindBy;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Vector;
 
 public class AuthEventsPageHelper extends PageBase
 {
@@ -69,8 +67,11 @@ public class AuthEventsPageHelper extends PageBase
     @FindBy(xpath = "//button[@type='submit']")
     WebElement saveEventButton;
 
+    @FindBy(xpath = "//span[contains(text(),'Kosher')]")
+    WebElement listOfFoodValues;
 
-
+    @FindBy(xpath = "//span[contains(text(),'Shabat')]")
+    WebElement listOfHolidayValues;
 
 
     Actions action = new Actions(driver);
@@ -133,6 +134,7 @@ public class AuthEventsPageHelper extends PageBase
     public AuthEventsPageHelper selectHoliday(String holiday)
     {
         holidayField.click();
+        waitUntilElementIsClickable(driver, listOfHolidayValues, 100);
         driver.findElement(By.xpath("//span[contains(text(),'"+holiday+"')]")).click();
         action.sendKeys(Keys.ESCAPE).build().perform();
         return this;
@@ -313,6 +315,7 @@ public class AuthEventsPageHelper extends PageBase
     public AuthEventsPageHelper selectKitchen(String value)
     {
         typeOfKitchen.click();
+        waitUntilElementIsClickable(driver, listOfFoodValues,100 );
         driver.findElement(By.xpath("//span[contains(text(),'"+ value +"')]")).click();
         action.sendKeys(Keys.ESCAPE).build().perform();
         return this;
@@ -337,16 +340,5 @@ public class AuthEventsPageHelper extends PageBase
         saveEventButton.click();
         return this;
     }
-
-    public AuthEventsPageHelper timeFieldArray()
-    {
-        List<WebElement> p = driver.findElements(By.xpath("//div[@class='col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex flex-row justify-content-start']//input"));
-        int size = p.size();
-        String atr = String.valueOf(timeFrom.getLocation());
-        System.out.println("Size of the list is  " + size );
-        System.out.println("Atribut of the list is  " + atr );
-        return this;
-    }
-
 
 }

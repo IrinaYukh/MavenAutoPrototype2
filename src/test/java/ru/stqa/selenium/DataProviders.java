@@ -41,7 +41,7 @@ public class DataProviders {
         return userData.iterator();
     }
 
-    
+
     private Object generateRandomPassword() {
         return "pass" + new Random().nextInt();
     }

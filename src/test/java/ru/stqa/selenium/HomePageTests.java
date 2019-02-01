@@ -8,6 +8,9 @@ import ru.stqa.selenium.pages.CreateAccountPageHelper;
 import ru.stqa.selenium.pages.HomePageHelper;
 import ru.stqa.selenium.pages.LoginPageHelper;
 import ru.stqa.selenium.pages.UnAuthEventsPageHelper;
+import org.apache.log4j.Logger;
+import util.LogLog4j;
+
 
 public class HomePageTests extends TestBase {
 
@@ -15,6 +18,9 @@ public class HomePageTests extends TestBase {
   private UnAuthEventsPageHelper unAuthEventsPage;
   private LoginPageHelper loginPage;
   private CreateAccountPageHelper createAccountPage;
+//  private ExtentTestManager extentTestManager;
+  private static Logger Log = Logger.getLogger(LogLog4j.class.getName());
+
 
   @BeforeMethod
   public void initPageObjects()
@@ -23,6 +29,7 @@ public class HomePageTests extends TestBase {
     unAuthEventsPage = PageFactory.initElements(driver, UnAuthEventsPageHelper.class);
     loginPage = PageFactory.initElements(driver, LoginPageHelper.class);
     createAccountPage = PageFactory.initElements(driver,CreateAccountPageHelper.class);
+//    extentTestManager = PageFactory.initElements(driver,ExtentTestManager.class);
     driver.get(baseUrl);
   }
 
@@ -30,8 +37,10 @@ public class HomePageTests extends TestBase {
   @Test
   public void openHomePageTest()
   {
+    Log.info("----------- Test openHomePage was started -----------------");
+    Log.info("Test openHomePageTest:  homePage is loaded ");
     homepage.waitUntilPageIsLoaded();
-    //WebElement buttonLogin = driver.findElement(By.xpath("//span[contains(text(),'Login')]"));
+    Log.info("Test openHomePageTest: verify that displayed correct Header text ");
     Assert.assertEquals(homepage.getHeaderText(),"Shabbat in the family circle");
 
   }
@@ -54,7 +63,7 @@ public class HomePageTests extends TestBase {
 
   }
 
-  @Test
+  @Test(priority = 1, description = "Clicking on the Go To Event Page button for redirection on Events Page")
   public void a_goToEventsPageTest()
   {
       homepage.waitUntilPageIsLoaded()
@@ -84,53 +93,5 @@ public class HomePageTests extends TestBase {
 
     Assert.assertTrue(createAccountPage.isCreateAccountPageOpened());
   }
-
-
-
-//  @Test
-//  public void verifyLoginButtonTest()
-//  {
-//      homepage.waitUntilPageIsLoaded();
-//    if (homepage.verifyLoginButton().equals("Go to Event list"))
-//    {
-//      System.out.println("Login button test is pass!");
-//    }
-//    else
-//    {
-//      System.out.println("Login button test is failed.");
-//    }
-//  }
-//
-//  @Test ()
-//  public void verifyCreateAccountButton()
-//  {
-//      homepage.waitUntilPageIsLoaded();
-//      if (homepage.verifyCreateAccountButton().equals("Go to Event list"))
-//    {
-//      System.out.println("Create account button test is pass!");
-//    }
-//    else
-//    {
-//      System.out.println("Create account button test is failed.");
-//    }
-//  }
-//
-//  @Test()
-//  public void verifyWEventListButton()
-//  {
-//      homepage.waitUntilPageIsLoaded();
-//
-//    if (homepage.verifyEventListButton().equals("Filters"))
-//      //if (homepage.verifyEventListButton().equals("Go to Event list"))
-//    {
-//      System.out.println("Event list button test is pass!");
-//
-//    }
-//    else
-//    {
-//      System.out.println("Event list button test is failed.");
-//    }
-//
-//  }
 
 }

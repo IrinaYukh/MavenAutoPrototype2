@@ -1,7 +1,6 @@
 package ru.stqa.selenium;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -35,11 +34,10 @@ public class CreateAccountTests extends TestBase
         homepage.waitUntilPageIsLoaded();
         homepage.pressCreateAccountButton();
         createAccountPage.waitUntilElementIsloaded();
-
     }
+
     @Test
-    public void createAccountPositiveTest()
-    {
+    public void createAccountPositiveTest() {
         String email = "darya"+count+"@gmail.com";
 
         createAccountPage.enterEmail(email)
@@ -60,17 +58,17 @@ public class CreateAccountTests extends TestBase
                 .selectFood("Any")
                 .enterInfo("Hello!")
                 .selectLanguage("Russian")
-                .enterBirthday("10","JAN","2000");
+                .enterBirthdayRange("10","JAN","1970");
+  //              .enterBirthday("10","JAN","2000");
 
         registForm.clickSaveButton();
-
 
         Assert.assertTrue(authEventsPage.isDisplayedIconMenu());
         Assert.assertTrue(authEventsPage
                 .isElementPresent(By.xpath("//button[@class='mat-fab mat-warn']//span[@class='mat-button-wrapper']")));
         Assert.assertTrue(authEventsPage.isDisplayedAddEventIcon());
 
-    }
+        }
 
 
 }

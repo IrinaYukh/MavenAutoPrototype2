@@ -1,10 +1,9 @@
 package ru.stqa.selenium.pages;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -13,6 +12,8 @@ import org.openqa.selenium.support.How;
  * Sample page
  */
 public class HomePageHelper extends PageBase {
+
+  private static Logger Log = Logger.getLogger(util.LogLog4j.class.getName());
 
   @FindBy(how = How.TAG_NAME, using = "h1")
   @CacheLookup
@@ -38,8 +39,8 @@ public class HomePageHelper extends PageBase {
 
   public HomePageHelper waitUntilPageIsLoaded()
   {
-    // waitUntilElementIsloaded(driver, By.xpath("//span[contains(text(),'Go to Event list')]"), 30);
-    waitUntilElementIsloaded(driver, goToEventListButton, 100);
+    Log.info("HomePageHelper: wait until gotoEventButton is loaded");
+    waitUntilElementIsloaded(driver, goToEventListButton, 40);
     return this;
   }
 
@@ -63,52 +64,10 @@ public class HomePageHelper extends PageBase {
     return goToEventListButton.getText();
   }
 
-  public String verifyLoginButton()
-  {
-    loginButton.click();
-    cancelButton();
-    waitUntilElementIsloaded(driver,goToEventListButton,500);
-    return goToEventListButton.getText();
-  }
-
-  public String verifyCreateAccountButton()
-  {
-    createAccountButton.click();
-    cancelButton();
-    waitUntilElementIsloaded(driver,goToEventListButton,500);
-    return goToEventListButton.getText();
-  }
-
-  public String verifyEventListButton()
-  {
-    //goToEventListButton.click();
-    //driver.findElement(By.xpath("//button[@class='mat-stroked-button']/span[@class='mat-button-wrapper']")).click();
-    System.out.println(driver.findElement(By.xpath("//button[@class='mat-stroked-button']/span[@class='mat-button-wrapper']")).getText());
-
-    // position on one special element
-    Actions action = new Actions(driver);
-    action.moveToElement(goToEventListButton).build().perform();
-
-    goToEventListButton.click();
-    //driver.findElement(By.xpath("//button[@class='mat-stroked-button']/span[@class='mat-button-wrapper']")).click();
-    //return driver.findElement(By.xpath("//button[@class='mat-stroked-button']/span[@class='mat-button-wrapper']")).getText();
-     waitUntilElementIsloaded(driver,eventsPage,500);
-    return eventsPage.getText();
-  }
-
   public HomePageHelper cancelButton()
   {
     driver.findElement(By.xpath("//span[contains(text(),'Cancel')]")).click();
     return this;
-  }
-
-  public boolean isElementPresent(By locator) {
-    try {
-      driver.findElement(locator);
-      return true;
-    } catch (NoSuchElementException e) {
-      return false;
-    }
   }
 
   public HomePageHelper pressGoToEventButton()
@@ -119,6 +78,7 @@ public class HomePageHelper extends PageBase {
 
   public HomePageHelper pressLoginButton()
   {
+    Log.info("HomePageHelper: login button was pressed");
     loginButton.click();
     return this;
   }
@@ -126,6 +86,12 @@ public class HomePageHelper extends PageBase {
   public HomePageHelper pressCreateAccountButton()
   {
     createAccountButton.click();
+    return this;
+  }
+
+  public HomePageHelper isLoginButtonPresent()
+  {
+    isElementPresent(By.xpath("//span[contains(text(),'Login')]"));
     return this;
   }
 }

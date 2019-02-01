@@ -1,10 +1,16 @@
 package ru.stqa.selenium.pages;
 
+import org.apache.log4j.Logger;
+import util.LogLog4j;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.io.File;
 
 /**
  * Abstract class representation of a PageBase in the UI. PageBase object pattern
@@ -12,6 +18,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public abstract class PageBase {
 
   protected WebDriver driver;
+  protected static Logger Log = Logger.getLogger(util.LogLog4j.class.getName());
 
   /*
    * Constructor injecting the WebDriver interface
@@ -42,6 +49,17 @@ public abstract class PageBase {
     }
   }
 
+  public static void waitUntilElementIsVisible(WebDriver driver, WebElement element, int time)
+  {
+    try {
+      WebDriverWait wait = new WebDriverWait(driver, time);
+      wait.until(ExpectedConditions.visibilityOf(element));
+    } catch (Exception e){
+      e.printStackTrace();
+    }
+  }
+
+
   public static void waitUntilElementIsClickable(WebDriver driver, WebElement element, int time) {
     try {
       new WebDriverWait(driver, time).until(ExpectedConditions.elementToBeClickable(element));
@@ -67,4 +85,25 @@ public abstract class PageBase {
     }
   }
 
+    public boolean isElementPresent(By locator) {
+        try {
+            driver.findElement(locator);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+
+
+//  public void attach(WebElement element, File file)
+//  {
+//    if (file != null)
+//    {
+//      element.click();
+//      uploadPicture.click();
+//      element.sendKeys(file.getAbsolutePath());
+//      submitUploadPicture.click();
+//    }
+//  }
 }

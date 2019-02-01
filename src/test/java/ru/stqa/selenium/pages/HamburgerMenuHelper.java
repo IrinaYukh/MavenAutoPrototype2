@@ -9,6 +9,9 @@ public class HamburgerMenuHelper extends PageBase
     @FindBy (xpath = "//span[@class='marginLeft']")
     WebElement logOutButton;
 
+    @FindBy(xpath = "//span[contains(text(),'Profile')]")
+    WebElement profileButton;
+
     public HamburgerMenuHelper(WebDriver driver)
     {
         super(driver);
@@ -23,6 +26,12 @@ public class HamburgerMenuHelper extends PageBase
     public HamburgerMenuHelper clickLogoutButton()
     {
         logOutButton.click();
+        return this;
+    }
+
+    public HamburgerMenuHelper clickProfileButton()
+    {
+        profileButton.click();
         return this;
     }
 
